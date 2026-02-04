@@ -11,6 +11,8 @@ services:
       - '5434:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data:Z
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-postgres} -d $${POSTGRES_DB:-progressocorp}"]
       interval: 10s
@@ -28,6 +30,8 @@ services:
       - "8081:80"
     depends_on:
       - postgres
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:80/misc/ping"]
       interval: 30s
@@ -44,16 +48,19 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@10.88.0.1:5434/${POSTGRES_DB:-progressocorp}?schema=public
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@host.containers.internal:5434/${POSTGRES_DB:-progressocorp}?schema=public
       JWT_SECRET: ${JWT_SECRET:-supersecret}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-15m}
       NODE_ENV: production
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://10.88.0.1:4318
-      REDIS_URL: redis://10.88.0.1:6379
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://host.containers.internal:4318
+      REDIS_HOST: host.containers.internal
+      REDIS_PORT: 6379
     depends_on:
       - postgres
       - otel-collector
       - redis
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/health/live"]
       interval: 30s
@@ -71,11 +78,18 @@ services:
     ports:
       - "4200:4200"
     environment:
-      API_URL: http://10.88.0.1:3001
+      API_URL: http://api:3001
       NEXT_PUBLIC_API_URL: http://localhost:3001
       NODE_ENV: production
     depends_on:
       - api
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4200', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   otel-collector:
     image: docker.io/otel/opentelemetry-collector:0.111.0
@@ -89,6 +103,8 @@ services:
       - "13133:13133" # Health Check extension
     depends_on:
       - jaeger
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:13133/"]
       interval: 10s
@@ -104,6 +120,8 @@ services:
     ports:
       - "16686:16686" # Jaeger UI
       - "4317:4317"   # OTLP gRPC receiver
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:16686"]
       interval: 10s
@@ -116,11 +134,17 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - app-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   postgres_data:
