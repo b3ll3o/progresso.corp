@@ -25,7 +25,7 @@ describe('PermissoesController', () => {
   };
 
   // Mock Request object for @Req()
-  const mockRequest = (isAdmin: boolean = false, userId?: number) => {
+  const mockRequest = (isAdmin = false, userId?: number) => {
     const req = {
       usuarioLogado: {
         userId: userId || 1,

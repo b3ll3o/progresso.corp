@@ -49,7 +49,7 @@ export class PerfisService {
 
   async findAll(
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<PaginatedResponseDto<Perfil>> {
     const page = paginationDto.page ?? 1;
@@ -74,7 +74,7 @@ export class PerfisService {
 
   async findOne(
     id: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<Perfil> {
     const perfil = await this.perfilRepository.findOne(
@@ -91,7 +91,7 @@ export class PerfisService {
   async findByNomeContaining(
     nome: string,
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<PaginatedResponseDto<Perfil>> {
     const page = paginationDto.page ?? 1;

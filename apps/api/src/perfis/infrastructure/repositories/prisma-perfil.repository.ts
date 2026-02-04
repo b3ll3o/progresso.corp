@@ -53,7 +53,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
   async findAll(
     skip: number,
     take: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<[Perfil[], number]> {
     const whereClause: any = {};
@@ -77,7 +77,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
 
   async findOne(
     id: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<Perfil | undefined> {
     const whereClause: any = { id };
@@ -159,7 +159,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
 
   async findByNome(
     nome: string,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<Perfil | null> {
     const whereClause: any = { nome };
@@ -182,7 +182,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
     nome: string,
     skip: number,
     take: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<[Perfil[], number]> {
     const whereClause: any = {

@@ -28,7 +28,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
   async findAll(
     skip: number,
     take: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<[Permissao[], number]> {
     const client = includeDeleted
       ? this.prisma.permissao
@@ -44,7 +44,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
 
   async findOne(
     id: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<Permissao | undefined> {
     const client = includeDeleted
       ? this.prisma.permissao
@@ -113,7 +113,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
 
   async findByNome(
     nome: string,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<Permissao | null> {
     const client = includeDeleted
       ? this.prisma.permissao
@@ -129,7 +129,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
     nome: string,
     skip: number,
     take: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<[Permissao[], number]> {
     const client = includeDeleted
       ? this.prisma.permissao

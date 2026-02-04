@@ -24,7 +24,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
 
   async findOne(
     id: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<Usuario | undefined> {
     // If we want to include deleted, we should bypass the extension by providing deletedAt filter
     const queryResult = includeDeleted
@@ -38,7 +38,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
 
   async findAll(
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<PaginatedResponseDto<Usuario>> {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;

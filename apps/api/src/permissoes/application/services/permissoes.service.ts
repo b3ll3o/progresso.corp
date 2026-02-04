@@ -43,7 +43,7 @@ export class PermissoesService {
 
   async findAll(
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<PaginatedResponseDto<Permissao>> {
     const page = paginationDto.page ?? 1;
     const limit = paginationDto.limit ?? 10;
@@ -66,7 +66,7 @@ export class PermissoesService {
 
   async findOne(
     id: number,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<Permissao> {
     const permissao = await this.permissaoRepository.findOne(
       id,
@@ -81,7 +81,7 @@ export class PermissoesService {
   async findByNome(
     nome: string,
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<PaginatedResponseDto<Permissao>> {
     return this.findByNomeContaining(nome, paginationDto, includeDeleted);
   }
@@ -89,7 +89,7 @@ export class PermissoesService {
   async findByNomeContaining(
     nome: string,
     paginationDto: PaginationDto,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<PaginatedResponseDto<Permissao>> {
     const page = paginationDto.page ?? 1;
     const limit = paginationDto.limit ?? 10;

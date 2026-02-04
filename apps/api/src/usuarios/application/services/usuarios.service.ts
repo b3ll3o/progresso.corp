@@ -60,7 +60,7 @@ export class UsuariosService {
   async findAll(
     paginationDto: PaginationDto,
     usuarioLogado: UsuarioLogado,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
     empresaId?: string,
   ): Promise<PaginatedResponseDto<Usuario>> {
     const isAdminGlobal = usuarioLogado.empresas?.some((e) =>
@@ -86,7 +86,7 @@ export class UsuariosService {
   async findOne(
     id: number,
     usuarioLogado: UsuarioLogado,
-    includeDeleted: boolean = false,
+    includeDeleted = false,
   ): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findOne(id, includeDeleted); // Pass includeDeleted
     if (!usuario) {

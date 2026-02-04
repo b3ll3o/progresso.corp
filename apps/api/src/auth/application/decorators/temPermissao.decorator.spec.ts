@@ -21,7 +21,9 @@ describe('TemPermissao Decorator', () => {
     class TestController {
       @TemPermissao(permission)
       @Get('test')
-      testMethod() {}
+      testMethod() {
+        // Método de teste vazio
+      }
     }
 
     const metadata = reflector.get<string>(
@@ -38,7 +40,9 @@ describe('TemPermissao Decorator', () => {
     class TestController {
       @TemPermissao(permissions)
       @Get('test')
-      testMethod() {}
+      testMethod() {
+        // Método de teste vazio
+      }
     }
 
     const metadata = reflector.get<string[]>(
