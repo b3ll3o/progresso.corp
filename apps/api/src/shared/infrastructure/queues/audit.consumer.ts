@@ -18,7 +18,7 @@ export class AuditConsumer extends WorkerHost {
         await this.prisma.auditLog.create({
           data: job.data,
         });
-      } catch (error) {
+      } catch (error: any) {
         this.logger.error(`Failed to process audit log job ${job.id}`, error.stack);
         throw error;
       }

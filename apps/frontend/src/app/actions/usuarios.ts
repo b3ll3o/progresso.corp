@@ -16,8 +16,8 @@ const updateUsuarioSchema = z.object({
   ativo: z.boolean().optional(),
 });
 
-export type CreateUsuarioInput = z.infer<typeof createUsuarioSchema>;
-export type UpdateUsuarioInput = z.infer<typeof updateUsuarioSchema>;
+type CreateUsuarioInput = z.infer<typeof createUsuarioSchema>;
+type UpdateUsuarioInput = z.infer<typeof updateUsuarioSchema>;
 
 export async function createUsuario(formData: FormData) {
   const rawData = {

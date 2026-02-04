@@ -52,7 +52,7 @@ export class UsuarioAuthorizationService implements IUsuarioAuthorizationService
     return isOwner || this.isAdmin(usuarioLogado);
   }
 
-  canRestoreUsuario(usuarioId: number, usuarioLogado: JwtPayload): boolean {
+  canRestoreUsuario(_usuarioId: number, usuarioLogado: JwtPayload): boolean {
     if (this.isAdmin(usuarioLogado)) return true;
 
     return (

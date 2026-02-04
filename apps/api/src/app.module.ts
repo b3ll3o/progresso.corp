@@ -25,7 +25,6 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { HealthModule } from './shared/infrastructure/health/health.module';
 import { SharedModule } from './shared/shared.module';
 import { AppConfig } from './shared/infrastructure/config/app.config';
-import { AuditInterceptor } from './shared/infrastructure/interceptors/audit.interceptor';
 
 @Module({
   imports: [
@@ -41,7 +40,7 @@ import { AuditInterceptor } from './shared/infrastructure/interceptors/audit.int
           process.env.NODE_ENV !== 'production'
             ? { target: 'pino-pretty' }
             : undefined,
-      },
+      } as any,
     }),
     CacheModule.registerAsync({
       isGlobal: true,
@@ -126,10 +125,6 @@ import { AuditInterceptor } from './shared/infrastructure/interceptors/audit.int
     {
       provide: APP_INTERCEPTOR,
       useClass: EmpresaInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: AuditInterceptor,
     },
     {
       provide: PasswordHasher,

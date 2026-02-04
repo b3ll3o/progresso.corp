@@ -3,7 +3,6 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
-  Logger,
 } from '@nestjs/common';
 import { CreatePerfilDto } from '../../dto/create-perfil.dto';
 import { UpdatePerfilDto } from '../../dto/update-perfil.dto';
@@ -18,8 +17,6 @@ type UsuarioLogado = JwtPayload;
 
 @Injectable()
 export class PerfisService {
-  private readonly logger = new Logger(PerfisService.name);
-
   constructor(
     private readonly perfilRepository: PerfilRepository,
     private readonly permissoesService: PermissoesService,

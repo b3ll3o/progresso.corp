@@ -74,7 +74,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
         data,
       });
       return this.toDomain(permissao);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         return undefined;
       }
@@ -88,7 +88,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
         where: { id },
       });
       return this.toDomain(softDeletedPermissao);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         throw new Error(`Permissão com ID ${id} não encontrada.`); // Or throw NotFoundException
       }
@@ -103,7 +103,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
         data: { deletedAt: null, ativo: true },
       });
       return this.toDomain(restoredPermissao);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         throw new Error(`Permissão com ID ${id} não encontrada.`); // Or throw NotFoundException
       }

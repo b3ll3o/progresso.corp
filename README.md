@@ -30,6 +30,7 @@
 
 - [Features](#features)
 - [Architecture](#architecture)
+- [Documentation & Guides](#-documentation--guides)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Development](#development)
@@ -39,6 +40,18 @@
 - [CI/CD](#cicd)
 - [Best Practices](#best-practices)
 - [Contributing](#contributing)
+
+---
+
+## 📚 Documentation & Guides
+
+Para entender mais profundamente o projeto, consulte nossos guias detalhados:
+
+- **[Guia de Arquitetura](./docs/ARCHITECTURE.md)**: Visão geral técnica, segurança, multi-tenancy e fluxo de dados.
+- **[Guia de Integração API](./docs/API_GUIDE.md)**: Autenticação, paginação, erros e Swagger.
+- **[Relatório de Melhorias](./MELHORIAS.md)**: Resumo das atualizações tecnológicas e arquiteturais aplicadas em 2025/2026.
+
+---
 
 ## ✨ Features
 

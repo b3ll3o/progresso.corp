@@ -17,8 +17,8 @@ const updateEmpresaSchema = z.object({
   ativo: z.boolean().optional(),
 });
 
-export type CreateEmpresaInput = z.infer<typeof createEmpresaSchema>;
-export type UpdateEmpresaInput = z.infer<typeof updateEmpresaSchema>;
+type CreateEmpresaInput = z.infer<typeof createEmpresaSchema>;
+type UpdateEmpresaInput = z.infer<typeof updateEmpresaSchema>;
 
 export async function createEmpresa(formData: FormData) {
   const rawData = {

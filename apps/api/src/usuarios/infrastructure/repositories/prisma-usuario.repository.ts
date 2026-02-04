@@ -119,7 +119,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
       });
 
       return this.mapToEntity(softDeletedUsuario)!;
-    } catch (error) {
+    } catch (error: any) {
       if (
         error &&
         typeof error === 'object' &&
@@ -140,7 +140,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
       });
 
       return this.mapToEntity(restoredUsuario)!;
-    } catch (error) {
+    } catch (error: any) {
       if (
         error &&
         typeof error === 'object' &&

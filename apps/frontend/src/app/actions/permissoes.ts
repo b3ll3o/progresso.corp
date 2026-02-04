@@ -18,8 +18,8 @@ const updatePermissaoSchema = z.object({
   ativo: z.boolean().optional(),
 });
 
-export type CreatePermissaoInput = z.infer<typeof createPermissaoSchema>;
-export type UpdatePermissaoInput = z.infer<typeof updatePermissaoSchema>;
+type CreatePermissaoInput = z.infer<typeof createPermissaoSchema>;
+type UpdatePermissaoInput = z.infer<typeof updatePermissaoSchema>;
 
 export async function createPermissao(formData: FormData) {
   const rawData = {

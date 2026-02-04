@@ -23,7 +23,7 @@ export class AuthGuard extends PassportAuthGuard('jwt') {
     const result = await super.canActivate(context);
 
     if (result) {
-      request.usuarioLogado = request.user; // user is attached by AuthGuard
+      request.usuarioLogado = request.user as any; // user is attached by AuthGuard
     }
     return result as boolean;
   }

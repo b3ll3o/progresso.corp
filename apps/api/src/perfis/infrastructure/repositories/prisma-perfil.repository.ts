@@ -118,7 +118,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
         include: { permissoes: true },
       });
       return this.toDomain(perfil);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         return undefined;
       }
@@ -133,7 +133,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
         include: { permissoes: true },
       });
       return this.toDomain(softDeletedPerfil);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         throw new Error(`Perfil com ID ${id} não encontrado.`); // Or throw NotFoundException
       }
@@ -149,7 +149,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
         include: { permissoes: true },
       });
       return this.toDomain(restoredPerfil);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'P2025') {
         throw new Error(`Perfil com ID ${id} não encontrado.`); // Or throw NotFoundException
       }

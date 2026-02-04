@@ -42,7 +42,6 @@ export class UsuariosService {
 
     const newUsuario = new Usuario();
     newUsuario.email = createUsuarioDto.email;
-    newUsuario.senha = undefined; // Initialize senha to undefined
 
     if (createUsuarioDto.senha) {
       newUsuario.senha = await this.passwordHasher.hash(createUsuarioDto.senha);

@@ -19,8 +19,7 @@ export class AuditProducerService {
         },
         removeOnComplete: true,
       });
-    } catch (error) {
-      this.logger.error('Error adding audit log to queue', error.stack);
-    }
-  }
+          } catch (error: any) {
+          this.logger.error('Error adding audit log to queue', error.stack);
+        }  }
 }

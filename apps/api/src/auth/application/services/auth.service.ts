@@ -44,8 +44,8 @@ export class AuthService {
     await this.prisma.loginHistory.create({
       data: {
         userId: user.id,
-        ip,
-        userAgent,
+        ip: ip ?? null,
+        userAgent: userAgent ?? null,
       },
     });
 

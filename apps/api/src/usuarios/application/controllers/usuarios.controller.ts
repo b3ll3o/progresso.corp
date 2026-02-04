@@ -25,7 +25,6 @@ import { PaginatedResponseDto } from '../../../shared/dto/paginated-response.dto
 import { UsuarioLogado } from '../../../shared/application/decorators/usuario-logado.decorator';
 import { JwtPayload } from '../../../shared/types/auth.types';
 import { EmpresaId } from '../../../shared/application/decorators/empresa-id.decorator';
-import { EmpresasService } from '../../../empresas/application/services/empresas.service';
 import { Permissoes } from '../../../shared/domain/constants/auth.constants';
 import { Auditar } from '../../../shared/application/decorators/audit.decorator';
 import { Throttle } from '@nestjs/throttler';

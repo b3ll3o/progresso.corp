@@ -15,7 +15,7 @@ export class PrismaService
 {
   private readonly logger = new Logger(PrismaService.name);
   private _extendedClient: any;
-  private breaker: CircuitBreaker;
+  private breaker: any;
 
   constructor() {
     super();

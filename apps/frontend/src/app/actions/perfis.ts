@@ -20,8 +20,8 @@ const updatePerfilSchema = z.object({
   ativo: z.boolean().optional(),
 });
 
-export type CreatePerfilInput = z.infer<typeof createPerfilSchema>;
-export type UpdatePerfilInput = z.infer<typeof updatePerfilSchema>;
+type CreatePerfilInput = z.infer<typeof createPerfilSchema>;
+type UpdatePerfilInput = z.infer<typeof updatePerfilSchema>;
 
 export async function createPerfil(formData: FormData) {
   const permissoesIdsStr = formData.get('permissoesIds') as string;

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PasswordHasher } from '../shared/domain/services/password-hasher.service';
 import { BcryptPasswordHasherService } from '../shared/infrastructure/services/bcrypt-password-hasher.service';
 import { AppConfig } from './infrastructure/config/app.config';
@@ -8,6 +9,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { QUEUES } from './domain/constants/queues.constants';
 import { AuditProducerService } from './infrastructure/queues/audit.producer.service';
 import { AuditConsumer } from './infrastructure/queues/audit.consumer';
+import { AuditInterceptor } from './infrastructure/interceptors/audit.interceptor';
 
 @Module({
   imports: [
@@ -23,6 +25,10 @@ import { AuditConsumer } from './infrastructure/queues/audit.consumer';
     {
       provide: AuthorizationService,
       useClass: DefaultAuthorizationService,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuditInterceptor,
     },
     AppConfig,
     AuditProducerService,
