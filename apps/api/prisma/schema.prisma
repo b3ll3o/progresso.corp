@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  usuarioId Int?
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  acao      String
+  recurso   String
+  recursoId String?
+  detalhes  Json?
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([usuarioId])
+  @@index([recurso, recursoId])
+}
+
+model Usuario {
+  id                  Int              @id @default(autoincrement())
+  email               String           @unique
+  senha               String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  deletedAt           DateTime?
+  ativo               Boolean          @default(true)
+  empresas            UsuarioEmpresa[]
+  empresasResponsavel Empresa[]        @relation("EmpresaResponsavel")
+  refreshTokens       RefreshToken[]
+  auditLogs           AuditLog[]
+  loginHistory        LoginHistory[]
+
+  @@index([deletedAt, ativo])
+}
+
+model LoginHistory {
+  id        String   @id @default(uuid())
+  userId    Int
+  user      Usuario  @relation(fields: [userId], references: [id])
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    Int
+  user      Usuario  @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Perfil {
+  id              Int              @id @default(autoincrement())
+  nome            String
+  codigo          String
+  descricao       String
+  createdAt       DateTime?        @default(now())
+  updatedAt       DateTime?        @updatedAt
+  usuariosEmpresa UsuarioEmpresa[]
+  permissoes      Permissao[]
+  deletedAt       DateTime?
+  ativo           Boolean          @default(true)
+  empresa         Empresa          @relation(fields: [empresaId], references: [id])
+  empresaId       String
+
+  @@unique([nome, empresaId])
+  @@unique([codigo, empresaId])
+  @@index([empresaId, deletedAt, ativo])
+}
+
+model Permissao {
+  id        Int       @id @default(autoincrement())
+  nome      String    @unique
+  codigo    String    @unique
+  descricao String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  perfis    Perfil[]
+  deletedAt DateTime?
+  ativo     Boolean   @default(true)
+
+  @@index([deletedAt, ativo])
+}
+
+model Empresa {
+  id            String           @id @default(uuid())
+  nome          String
+  descricao     String?
+  ativo         Boolean          @default(true)
+  responsavel   Usuario          @relation("EmpresaResponsavel", fields: [responsavelId], references: [id])
+  responsavelId Int
+  usuarios      UsuarioEmpresa[]
+  perfis        Perfil[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  deletedAt     DateTime?
+
+  @@index([responsavelId])
+  @@index([deletedAt, ativo])
+}
+
+model UsuarioEmpresa {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  empresa   Empresa  @relation(fields: [empresaId], references: [id])
+  empresaId String
+  perfis    Perfil[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([usuarioId, empresaId])
+}

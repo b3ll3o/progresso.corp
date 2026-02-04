@@ -7,4 +7,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/api',
+  moduleNameMapper: {
+    '^uuid$': '<rootDir>/../../node_modules/uuid/dist/index.js',
+  },
 };
