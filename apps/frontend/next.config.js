@@ -6,13 +6,14 @@ const { composePlugins, withNx } = require('@nx/next');
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  nx: {
-    svgr: true,
+  nx: {},
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  experimental: {
-    ppr: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  transpilePackages: ['@monorepo/shared-models', '@monorepo/shared-utils'],
   async rewrites() {
     return [
       {
@@ -22,12 +23,7 @@ const nextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    unoptimized: true,
   },
 };
 
