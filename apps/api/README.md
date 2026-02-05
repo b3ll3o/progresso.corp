@@ -46,16 +46,16 @@ nx test api
 nx e2e api-e2e
 ```
 
-## 🐳 Docker
+## 🐳 Podman
 
 A aplicação possui um `Dockerfile` multi-stage otimizado para produção.
 
 ```bash
 # Build local
-docker build -t progressocorp-api .
+podman build -t progressocorp-api .
 
 # Rodar via compose (na raiz do monorepo)
-npm run docker:up
+npm run podman:up
 ```
 
 ## 📊 Observabilidade

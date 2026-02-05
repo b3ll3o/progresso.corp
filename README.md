@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <strong>Modern Monorepo Architecture with Next.js 15 and NestJS 11</strong>
+  <strong>Arquitetura Monorepo Moderna com Next.js 15 e NestJS 11</strong>
 </p>
 
 <p align="center">
@@ -26,87 +26,90 @@
 
 ---
 
-## 📋 Table of Contents
+## 📋 Índice
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [Documentation & Guides](#-documentation--guides)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Available Scripts](#available-scripts)
-- [Project Structure](#project-structure)
-- [Docker](#docker)
+- [Funcionalidades](#funcionalidades)
+- [Arquitetura](#arquitetura)
+- [Documentação e Guias](#-documentação-e-guias)
+- [Pré-requisitos](#pré-requisitos)
+- [Primeiros Passos](#primeiros-passos)
+- [Desenvolvimento](#desenvolvimento)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Podman](#podman)
 - [CI/CD](#cicd)
-- [Best Practices](#best-practices)
-- [Contributing](#contributing)
+- [Melhores Práticas](#melhores-práticas)
+- [Contribuição](#contribuição)
 
 ---
 
-## 📚 Documentation & Guides
+## 📚 Documentação e Guias
 
-Para entender mais profundamente o projeto, consulte nossos guias detalhados:
+Para entender mais profundamente o projeto, consulte nossos guias detalhados na pasta `docs/`:
 
 - **[Guia de Arquitetura](./docs/ARCHITECTURE.md)**: Visão geral técnica, segurança, multi-tenancy e fluxo de dados.
 - **[Guia de Integração API](./docs/API_GUIDE.md)**: Autenticação, paginação, erros e Swagger.
-- **[Relatório de Melhorias](./MELHORIAS.md)**: Resumo das atualizações tecnológicas e arquiteturais aplicadas em 2025/2026.
+- **[Relatório de Melhorias](./docs/MELHORIAS.md)**: Resumo das atualizações tecnológicas e arquiteturais aplicadas.
+- **[Agentes de IA](./docs/AGENTS.md)**: Documentação sobre a integração e uso de agentes de inteligência artificial.
 
 ---
 
-## ✨ Features
+## ✨ Funcionalidades
 
 ### Backend (API)
-- **NestJS 11** with Fastify adapter for high performance
-- **JWT Authentication** with refresh tokens
-- **RBAC Authorization** (Role-Based Access Control)
-- **Prisma ORM** with PostgreSQL
-- **Redis** caching and BullMQ queues
-- **OpenAPI/Swagger** documentation
-- **Rate limiting** with Throttler
-- **Observability**: OpenTelemetry, Sentry, Pino logging
-- **Health checks** and graceful shutdown
+- **NestJS 11** com adaptador Fastify para alta performance.
+- **Autenticação JWT** com rotação de refresh tokens.
+- **Autorização RBAC** (Role-Based Access Control).
+- **Prisma ORM** com PostgreSQL.
+- **Redis** para caching e filas BullMQ.
+- **Documentação OpenAPI/Swagger**.
+- **Rate limiting** com Throttler.
+- **Observabilidade**: OpenTelemetry, Sentry, logging com Pino.
+- **Health checks** e graceful shutdown.
 
 ### Frontend
-- **Next.js 15** with App Router and Server Actions
-- **React 19** with latest features
-- **Tailwind CSS** for styling
-- **TypeScript** strict mode
-- **Authentication context** with local storage
-- **Modern UI** with responsive design
+- **Next.js 15** com App Router e Server Actions.
+- **React 19** com as funcionalidades mais recentes.
+- **Tailwind CSS** para estilização.
+- **TypeScript** em modo estrito.
+- **Contexto de Autenticação** integrado.
+- **UI Moderna** com design responsivo.
 
-### Infrastructure
-- **Nx** monorepo with distributed caching
-- **Nx Cloud** for remote caching
-- **Docker** multi-stage builds
-- **GitHub Actions** CI/CD pipeline
-- **Husky** + lint-staged + commitlint
+### Infraestrutura
+- **Nx** monorepo com cache distribuído.
+- **Nx Cloud** para cache remoto.
+- **Podman** para orquestração de containers local.
+- **GitHub Actions** para pipeline de CI/CD.
+- **Husky** + lint-staged + commitlint.
 
-## 🏗 Architecture
+## 🏗 Arquitetura
 
 ```
 monorepo/
 ├── apps/
-│   ├── api/              # NestJS backend API
-│   ├── frontend/         # Next.js frontend
-│   ├── api-e2e/          # API E2E tests
-│   └── frontend-e2e/     # Frontend E2E tests
+│   ├── api/              # Backend API NestJS
+│   ├── frontend/         # Frontend Next.js
+│   ├── api-e2e/          # Testes E2E da API
+│   └── frontend-e2e/     # Testes E2E do Frontend
 ├── libs/
-│   ├── shared-models/    # Shared DTOs and types
-│   └── shared-utils/     # Shared utility functions
-├── docker-compose.yml    # Docker orchestration
-└── nx.json              # Nx configuration
+│   ├── shared-models/    # DTOs e tipos compartilhados
+│   └── shared-utils/     # Funções utilitárias compartilhadas
+├── docs/                 # Documentação do projeto
+├── .agents/              # Agentes de IA e ferramentas relacionadas
+├── podman-compose.yml    # Orquestração Podman
+└── nx.json              # Configuração do Nx
 ```
 
-## 📋 Prerequisites
+## 📋 Pré-requisitos
 
-- **Node.js** 20.x or higher
-- **npm** 10.x or higher
-- **Docker** and Docker Compose (for local development)
-- **Git**
+- **Node.js** 20.x ou superior.
+- **npm** 10.x ou superior.
+- **Podman** e Podman Compose (para desenvolvimento local).
+- **Git**.
 
-## 🚀 Getting Started
+## 🚀 Primeiros Passos
 
-### 1. Clone and Install
+### 1. Clonar e Instalar
 
 ```bash
 git clone <repository-url>
@@ -114,16 +117,16 @@ cd monorepo
 npm install
 ```
 
-### 2. Environment Setup
+### 2. Configuração de Ambiente
 
-Create a `.env` file in the root:
+Crie um arquivo `.env` na raiz:
 
 ```env
 # Database
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/progressocorp?schema=public"
 
 # JWT
-JWT_SECRET="your-super-secret-jwt-key"
+JWT_SECRET="sua-chave-secreta-jwt"
 JWT_EXPIRES_IN="15m"
 JWT_REFRESH_EXPIRES_IN="7d"
 
@@ -138,319 +141,161 @@ API_URL="http://localhost:3000"
 NEXT_PUBLIC_API_URL="http://localhost:3000"
 ```
 
-### 3. Start Infrastructure
+### 3. Iniciar Infraestrutura
 
 ```bash
-npm run docker:up
+npm run podman:up
 ```
 
-This starts PostgreSQL, Redis, and other services.
+*Nota: O comando utiliza `podman-compose` internamente.*
 
-### 4. Database Setup
+### 4. Configurar Banco de Dados
 
 ```bash
 npm run prisma:generate
 npm run prisma:migrate
 ```
 
-### 5. Start Development
+### 5. Iniciar Desenvolvimento
 
 ```bash
-# Start both API and Frontend
+# Iniciar API e Frontend simultaneamente
 npm run dev
 
-# Or start individually
+# Ou iniciar individualmente
 npm run dev:api
 npm run dev:frontend
 ```
 
-The applications will be available at:
+As aplicações estarão disponíveis em:
 - **Frontend**: http://localhost:4200
 - **API**: http://localhost:3000
-- **API Docs**: http://localhost:3000/api/docs
+- **Documentação API**: http://localhost:3000/api/docs
 
-## 💻 Development
+## 💻 Desenvolvimento
 
-### Code Organization
+### Organização de Código
 
-We follow strict organization with Nx tags:
+Seguimos uma organização rigorosa com tags do Nx:
 
-- `scope:api` - API application code
-- `scope:frontend` - Frontend application code
-- `scope:shared` - Shared libraries
-- `type:app` - Applications
-- `type:model` - Data models
-- `type:util` - Utility libraries
+- `scope:api` - Código da aplicação API.
+- `scope:frontend` - Código da aplicação Frontend.
+- `scope:shared` - Bibliotecas compartilhadas.
+- `type:app` - Aplicações.
+- `type:model` - Modelos de dados.
+- `type:util` - Bibliotecas utilitárias.
 
-### Dependency Constraints
+## 📝 Scripts Disponíveis
 
-API can depend on:
-- `scope:shared`
-
-Frontend can depend on:
-- `scope:shared`
-
-Shared libraries cannot depend on applications.
-
-## 📝 Available Scripts
-
-### Building
+### Build
 ```bash
-npm run build              # Build all applications
-npm run build:api          # Build API only
-npm run build:frontend     # Build Frontend only
-npm run build:affected     # Build affected by changes
+npm run build              # Build de todas as aplicações
+npm run build:api          # Build apenas da API
+npm run build:frontend     # Build apenas do Frontend
 ```
 
-### Development
+### Desenvolvimento
 ```bash
-npm run dev                # Start all in dev mode
-npm run dev:api            # Start API only
-npm run dev:frontend       # Start Frontend only
+npm run dev                # Inicia tudo em modo dev
+npm run dev:api            # Inicia apenas a API
+npm run dev:frontend       # Inicia apenas o Frontend
 ```
 
-### Testing
+### Testes
 ```bash
-npm run test               # Run all tests
-npm run test:api           # Test API only
-npm run test:frontend      # Test Frontend only
-npm run test:e2e           # Run E2E tests
-npm run test:affected      # Test affected by changes
+npm run test               # Executa todos os testes
+npm run test:api           # Testes da API
+npm run test:frontend      # Testes do Frontend
+npm run test:e2e           # Executa testes E2E
 ```
 
-### Code Quality
+### Qualidade de Código
 ```bash
-npm run lint               # Lint all projects
-npm run lint:fix           # Fix linting issues
-npm run format             # Format code with Prettier
-npm run format:check       # Check formatting
+npm run lint               # Lint em todos os projetos
+npm run lint:fix           # Corrige problemas de lint
+npm run format             # Formata o código com Prettier
 ```
 
-### Database
+### Banco de Dados
 ```bash
-npm run prisma:generate    # Generate Prisma client
-npm run prisma:migrate     # Run migrations
-npm run prisma:push        # Push schema changes
-npm run prisma:studio      # Open Prisma Studio
+npm run prisma:generate    # Gera o cliente Prisma
+npm run prisma:migrate     # Executa migrações
+npm run prisma:studio      # Abre o Prisma Studio
 ```
 
-### Docker
+### Podman
 ```bash
-npm run docker:up          # Start all services
-npm run docker:down        # Stop all services
-npm run docker:build       # Build Docker images
-npm run docker:logs        # View logs
+npm run podman:up          # Inicia todos os serviços (PostgreSQL, Redis, etc)
+npm run podman:down        # Para os serviços
+npm run podman:build       # Build das imagens
+npm run podman:logs        # Visualiza os logs
 ```
 
-### Nx Commands
-```bash
-npm run graph              # View project graph
-npm run graph:affected     # View affected graph
-npm run affected           # Run affected commands
-npm run clean              # Clean build cache
-```
+## 🐳 Podman
 
-## 📁 Project Structure
+Este projeto utiliza **Podman** para o ambiente de desenvolvimento.
 
-### API (`apps/api`)
-
-```
-api/
-├── src/
-│   ├── auth/              # Authentication module
-│   ├── usuarios/          # Users module
-│   ├── empresas/          # Companies module
-│   ├── perfis/            # Profiles module
-│   ├── permissoes/        # Permissions module
-│   ├── shared/            # Shared infrastructure
-│   │   ├── application/   # Application layer
-│   │   ├── domain/        # Domain layer
-│   │   └── infrastructure/# Infrastructure layer
-│   ├── main.ts           # Application entry
-│   └── app.module.ts     # Root module
-├── prisma/
-│   └── schema.prisma     # Database schema
-├── Dockerfile            # Multi-stage Dockerfile
-└── project.json          # Nx configuration
-```
-
-### Frontend (`apps/frontend`)
-
-```
-frontend/
-├── src/
-│   ├── app/              # Next.js App Router
-│   │   ├── page.tsx      # Home page
-│   │   ├── layout.tsx    # Root layout
-│   │   ├── login/        # Login page
-│   │   ├── dashboard/    # Dashboard page
-│   │   └── ...
-│   ├── components/       # React components
-│   │   ├── auth/         # Auth components
-│   │   ├── ui/           # UI components
-│   │   └── layout/       # Layout components
-│   ├── lib/              # Utility functions
-│   └── hooks/            # Custom hooks
-├── next.config.js        # Next.js configuration
-└── tailwind.config.js    # Tailwind CSS config
-```
-
-### Shared Libraries
-
-#### `libs/shared-models`
-Shared DTOs, interfaces, and types between API and Frontend.
-
-```typescript
-import { LoginUsuarioDto, Usuario } from '@monorepo/shared-models';
-```
-
-#### `libs/shared-utils`
-Shared utility functions.
-
-```typescript
-import { isValidEmail, formatDateBR } from '@monorepo/shared-utils';
-```
-
-## 🐳 Docker
-
-### Development
+### Comandos Comuns
 
 ```bash
-# Start all infrastructure services
-docker-compose up -d
+# Iniciar infraestrutura
+podman-compose up -d
 
-# View logs
-docker-compose logs -f
+# Visualizar logs
+podman-compose logs -f
 
-# Stop services
-docker-compose down
+# Parar serviços
+podman-compose down
 ```
 
-### Production Build
+### Serviços Disponíveis
 
-```bash
-# Build API Docker image
-cd apps/api
-docker build -t progressocorp-api .
-
-# Run container
-docker run -p 3000:3000 --env-file ../../.env progressocorp-api
-```
-
-### Services
-
-- **PostgreSQL** (port 5432): Main database
-- **Redis** (port 6379): Caching and queues
-- **PgAdmin** (port 8081): Database management UI
-- **Jaeger** (port 16686): Distributed tracing
+- **PostgreSQL** (porta 5432): Banco de dados principal.
+- **Redis** (porta 6379): Cache e filas.
+- **PgAdmin** (porta 8081): Interface de gerenciamento do banco.
+- **Jaeger** (porta 16686): Tracing distribuído.
 
 ## 🔄 CI/CD
 
-GitHub Actions workflow includes:
+O workflow do GitHub Actions inclui:
 
-1. **Lint and Test**: Runs on every PR
-   - ESLint
-   - Unit tests
-   - Build verification
+1. **Lint e Testes**: Executado em cada PR.
+2. **Build**: Executado na branch principal.
+3. **Validação de Containers**: Verifica se as imagens constroem corretamente.
 
-2. **Build**: Runs on main branch
-   - Build API and Frontend
-   - Upload artifacts
-
-3. **Docker Build**: Validates Docker images
-
-4. **E2E Tests**: Full integration testing
-   - Starts PostgreSQL and Redis
-   - Runs migrations
-   - Executes E2E test suite
-
-### Deployment
-
-The project is configured for easy deployment to:
-- **Vercel** (Frontend)
-- **Railway/Render/Fly.io** (API)
-- **AWS/GCP/Azure** (Full stack)
-
-## 🎯 Best Practices
+## 🎯 Melhores Práticas
 
 ### Commits
 
-We use [Conventional Commits](https://www.conventionalcommits.org/):
+Utilizamos [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-feat: add user authentication
-fix: resolve login redirect issue
-docs: update API documentation
-style: format code with prettier
-refactor: simplify auth middleware
-perf: optimize database queries
-test: add unit tests for auth service
-chore: update dependencies
-ci: configure GitHub Actions
-build: optimize Docker image size
+feat: adiciona autenticação de usuário
+fix: resolve problema de redirecionamento no login
+docs: atualiza documentação da API
 ```
 
-### Code Quality
+### Segurança
 
-- **ESLint**: Enforces code style
-- **Prettier**: Automatic formatting
-- **TypeScript**: Strict mode enabled
-- **Husky**: Pre-commit hooks
-- **lint-staged**: Staged file linting
+- Tokens JWT com rotação de refresh tokens.
+- Rate limiting em todos os endpoints.
+- Validação de input com class-validator.
+- Hashing de senhas com bcrypt.
+- Configuração de CORS e Helmet.
 
-### Testing Strategy
+## 🤝 Contribuição
 
-- **Unit Tests**: Jest for business logic
-- **Integration Tests**: Test controllers and services
-- **E2E Tests**: Playwright for full workflows
-- **Code Coverage**: Minimum 80% coverage
+1. Crie uma branch para a funcionalidade: `git checkout -b feat/nova-funcionalidade`
+2. Realize suas alterações.
+3. Execute os testes: `npm run test`
+4. Commit com formato convencional: `git commit -m "feat: adiciona nova funcionalidade"`
+5. Envie para o repositório: `git push origin feat/nova-funcionalidade`
+6. Abra um Pull Request.
 
-### Security
+## 📄 Licença
 
-- JWT tokens with refresh token rotation
-- Rate limiting on all endpoints
-- Input validation with class-validator
-- Password hashing with bcrypt
-- CORS configuration
-- Helmet for security headers
-
-## 🤝 Contributing
-
-1. Create a feature branch: `git checkout -b feat/new-feature`
-2. Make your changes
-3. Run tests: `npm run test`
-4. Commit with conventional format: `git commit -m "feat: add new feature"`
-5. Push to branch: `git push origin feat/new-feature`
-6. Open a Pull Request
-
-### Commit Message Format
-
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-Types:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation
-- `style`: Code style (formatting)
-- `refactor`: Code refactoring
-- `perf`: Performance improvement
-- `test`: Tests
-- `chore`: Build/config changes
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support, email support@progressocorp.com or join our Slack channel.
+Este projeto está licenciado sob a licença MIT.
 
 ---
 
-Built with ❤️ using [Nx](https://nx.dev), [Next.js](https://nextjs.org), and [NestJS](https://nestjs.com)
+Desenvolvido com ❤️ utilizando [Nx](https://nx.dev), [Next.js](https://nextjs.org) e [NestJS](https://nestjs.com)

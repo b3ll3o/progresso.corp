@@ -2,9 +2,9 @@
 
 ## ✅ FASE 1: Correções Críticas (Concluído)
 
-### 1.1 Dockerfile Multi-Stage
+### 1.1 Dockerfile Multi-Stage (Podman Ready)
 - **Arquivo**: `apps/api/Dockerfile`
-- **Descrição**: Dockerfile otimizado com 3 stages (deps, builder, runner)
+- **Descrição**: Dockerfile otimizado com 3 stages (deps, builder, runner), totalmente compatível com Podman.
 - **Features**:
   - Multi-stage build para reduzir imagem final
   - Non-root user para segurança
@@ -21,7 +21,7 @@
   - `test`, `test:affected`, `test:e2e`
   - `lint`, `lint:affected`, `lint:fix`
   - `prisma:generate`, `prisma:migrate`, `prisma:studio`
-  - `docker:up`, `docker:down`, `docker:build`
+  - `podman:up`, `podman:down`, `podman:build`
   - `graph`, `graph:affected`, `affected`
 
 ### 1.3 TypeScript Config Atualizado
@@ -145,10 +145,10 @@
   1. **lint-and-test**: ESLint, testes, build
   2. **build-api**: Build do backend
   3. **build-frontend**: Build do frontend
-  4. **docker-build**: Validação de Docker
-  5. **e2e-tests**: Testes end-to-end com PostgreSQL e Redis
+  4. **podman-build**: Validação de build com Podman
+  5. **e2e-tests**: Testes end-to-end com PostgreSQL e Redis (via Podman)
 
-### 6.2 Docker Compose
+### 6.2 Podman Compose
 - **Serviços**:
   - PostgreSQL 16
   - Redis 7
@@ -179,7 +179,7 @@
 | Scripts npm | 0 | 40+ |
 | Shared Libraries | 1 (vazia) | 2 (completas) |
 | Frontend | Template padrão | App Router completo |
-| Dockerfile | ❌ Não existia | ✅ Multi-stage |
+| Dockerfile | ❌ Não existia | ✅ Multi-stage (Podman) |
 | CI/CD | ❌ Não existia | ✅ GitHub Actions |
 | Git Hooks | ❌ Não existiam | ✅ Husky + lint-staged |
 | Tags Nx | ❌ Nenhuma | ✅ Todas configuradas |
@@ -189,7 +189,7 @@
 
 1. **Instalar dependências**: `npm install`
 2. **Copiar .env**: `cp .env.example .env`
-3. **Iniciar Docker**: `npm run docker:up`
+3. **Iniciar Podman**: `npm run podman:up`
 4. **Setup banco**: `npm run setup`
 5. **Iniciar dev**: `npm run dev`
 
@@ -199,9 +199,50 @@
 - **Qualidade**: ESLint, Prettier, TypeScript strict
 - **Colaboração**: Conventional Commits, code review facilitado
 - **Performance**: Nx Cloud caching, builds paralelos
-- **Deploy**: Docker ready, CI/CD configurado
+- **Deploy**: Podman ready, CI/CD configurado
 - **Manutenção**: Código organizado, documentado
 - **Escalabilidade**: Arquitetura pronta para crescer
+
+---
+
+## ✅ FASE 8: Consolidação e Atualização Global (Concluído)
+
+### 8.1 Consolidação do Monorepo
+- **Ação**: Removida pasta redundante `monorepo/` que causava conflitos de nomes de projetos no Nx.
+- **Resultado**: Grafo do projeto Nx restaurado e funcional. Arquivos únicos (como `.env.local` e assets da API) foram preservados e movidos para os locais corretos.
+
+### 8.2 Atualização em Massa de Dependências
+- **Ação**: Atualização de pacotes críticos para versões seguras e estáveis de 2025/2026.
+- **Pacotes Atualizados**:
+  - **Nx**: `22.4.4` -> `22.4.5`
+  - **NestJS**: `^11.0.0` -> `^11.1.13`
+  - **Prisma**: `6.15.0` -> `6.19.2`
+  - **Next.js**: `~16.0.1` -> `^16.1.6` (Correção de DoS e consumo de memória)
+  - **Otel/Tracing**: Versões atualizadas para compatibilidade com NestJS 11.
+  - **Tooling**: `prettier`, `rxjs`, `reflect-metadata`, `ts-node`, `webpack-cli`.
+
+### 8.3 Correção de Erros de Linting e Tipagem
+- **Ação**: Resolvido erro de construtor vazio em interceptors.
+- **Status**: Audit de segurança agora reporta **0 vulnerabilidades**.
+
+---
+
+## 🚀 Plano de Melhorias Futuras (FASE 9)
+
+### 9.1 Segurança Avançada
+- Implementar **Rate Limiting** granular por API Key.
+- Adicionar validação de schema para todas as mensagens do BullMQ.
+- Configurar políticas de segurança de conteúdo (CSP) mais restritivas no frontend.
+
+### 9.2 Observabilidade Proativa
+- Configurar dashboards no Grafana via Jaeger/OTEL.
+- Implementar alertas automáticos para falhas de filas do BullMQ.
+- Adicionar logs de auditoria para ações administrativas críticas.
+
+### 9.3 Performance e Escalabilidade
+- Migrar cache de memória local para Redis em todos os micro-serviços.
+- Otimizar imagens no frontend usando o Image Optimizer do Next.js (removendo `unoptimized: true` quando possível).
+- Implementar compressão de assets no build da API.
 
 ---
 

@@ -9,7 +9,7 @@ import { NestInstrumentation } from '@opentelemetry/instrumentation-nestjs-core'
 const traceExporter = new OTLPTraceExporter({
   url:
     process.env.OTEL_EXPORTER_OTLP_ENDPOINT ||
-    'http://localhost:4318/v1/traces', // Default para ambiente de dev local sem Docker
+    'http://localhost:4318/v1/traces', // Default para ambiente de dev local sem Podman
 });
 
 // Configure the SDK

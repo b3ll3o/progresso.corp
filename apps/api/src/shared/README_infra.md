@@ -2,14 +2,14 @@
 
 Este documento descreve os componentes técnicos que suportam a execução e o monitoramento da API.
 
-## 1. Docker e Containerização
+## 1. Podman e Containerização
 
 A aplicação utiliza um `Dockerfile` otimizado com **multi-stage build**:
 - **Builder stage**: Instala dependências do sistema e de build, gera o cliente Prisma e compila o TypeScript.
 - **Production stage**: Utiliza uma imagem leve (`node:alpine`), copia apenas o necessário (`dist`, `node_modules`, `prisma`) e executa com um usuário não-root (`appuser`) por questões de segurança.
 
-### Docker Compose
-O arquivo `docker-compose.yml` orquestra os seguintes serviços:
+### Podman Compose
+O arquivo `podman-compose.yml` orquestra os seguintes serviços:
 - `postgres`: Banco de dados principal (Porta 5433 local).
 - `pgadmin`: Interface web para gerenciar o Postgres (Porta 8081).
 - `jaeger`: Backend de tracing (Interface na porta 16686).

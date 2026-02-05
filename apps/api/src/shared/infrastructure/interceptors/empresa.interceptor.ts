@@ -13,8 +13,6 @@ import { v4 as uuidv4 } from 'uuid';
 export class EmpresaInterceptor implements NestInterceptor {
   private static readonly logger = new Logger(EmpresaInterceptor.name);
 
-  constructor() {}
-
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
