@@ -22,6 +22,7 @@ describe('PrismaEmpresaRepository', () => {
     create: jest.fn(),
     findMany: jest.fn(),
     count: jest.fn(),
+    deleteMany: jest.fn(),
   };
 
   const mockPrismaService = {
@@ -31,6 +32,12 @@ describe('PrismaEmpresaRepository', () => {
       empresa: mockEmpresaModel,
       usuarioEmpresa: mockUsuarioEmpresaModel,
     },
+    $transaction: jest.fn(async (callback) => {
+      const tx = {
+        usuarioEmpresa: mockUsuarioEmpresaModel,
+      };
+      return await callback(tx);
+    }),
   };
 
   beforeEach(async () => {
@@ -133,29 +140,37 @@ describe('PrismaEmpresaRepository', () => {
   });
 
   describe('addUserToCompany', () => {
-    it('deve criar novo vinculo se não existir', async () => {
-      mockUsuarioEmpresaModel.findUnique.mockResolvedValue(null);
-
+    it('deve criar novo vinculo usando transacao', async () => {
       await repository.addUserToCompany('empresa-id', 1, [1, 2]);
 
+      expect(mockPrismaService.$transaction).toHaveBeenCalled();
+      expect(mockUsuarioEmpresaModel.deleteMany).toHaveBeenCalledWith({
+        where: { empresaId: 'empresa-id', usuarioId: 1 },
+      });
       expect(mockUsuarioEmpresaModel.create).toHaveBeenCalledWith({
         data: {
-          usuarioId: 1,
           empresaId: 'empresa-id',
-          perfis: { connect: [{ id: 1 }, { id: 2 }] },
+          usuarioId: 1,
+          perfis: {
+            connect: [{ id: 1 }, { id: 2 }],
+          },
         },
       });
     });
 
-    it('deve atualizar vinculo se existir', async () => {
-      mockUsuarioEmpresaModel.findUnique.mockResolvedValue({ id: 10 });
-
+    it('deve remover vinculos anteriores antes de criar novo', async () => {
       await repository.addUserToCompany('empresa-id', 1, [3]);
 
-      expect(mockUsuarioEmpresaModel.update).toHaveBeenCalledWith({
-        where: { id: 10 },
+      expect(mockUsuarioEmpresaModel.deleteMany).toHaveBeenCalledWith({
+        where: { empresaId: 'empresa-id', usuarioId: 1 },
+      });
+      expect(mockUsuarioEmpresaModel.create).toHaveBeenCalledWith({
         data: {
-          perfis: { set: [{ id: 3 }] },
+          empresaId: 'empresa-id',
+          usuarioId: 1,
+          perfis: {
+            connect: [{ id: 3 }],
+          },
         },
       });
     });

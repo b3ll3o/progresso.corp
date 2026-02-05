@@ -1,19 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
 import { EmpresaRepository } from '../../domain/repositories/empresa.repository';
-import { CreateEmpresaDto } from '../../dto/create-empresa.dto';
-import { UpdateEmpresaDto } from '../../dto/update-empresa.dto';
-import { Empresa } from '../../domain/entities/empresa.entity';
+import {
+  Empresa,
+  CreateEmpresaData,
+  UpdateEmpresaData,
+} from '../../domain/entities/empresa.entity';
 import { PaginationDto } from '../../../shared/dto/pagination.dto';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { PaginatedResponseDto } from '../../../shared/dto/paginated-response.dto';
 
 @Injectable()
 export class PrismaEmpresaRepository implements EmpresaRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: CreateEmpresaDto): Promise<Empresa> {
-    const empresa = await this.prisma.extended.empresa.create({
-      data,
+  async create(data: CreateEmpresaData): Promise<Empresa> {
+    const createData: any = {
+      nome: data.nome,
+      responsavelId: data.responsavelId,
+    };
+    if (data.descricao !== undefined) {
+      createData.descricao = data.descricao;
+    }
+    const empresa = await this.prisma.empresa.create({
+      data: createData,
     });
     return new Empresa(empresa);
   }
@@ -24,42 +33,46 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
 
-    const [items, total] = await Promise.all([
+    const [total, items] = await Promise.all([
+      this.prisma.extended.empresa.count({ where: { deletedAt: null } }),
       this.prisma.extended.empresa.findMany({
+        where: { deletedAt: null },
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.extended.empresa.count(),
     ]);
-
-    const totalPages = Math.ceil(total / limit);
 
     return {
       data: items.map((item: any) => new Empresa(item)),
       total,
       page,
       limit,
-      totalPages,
+      totalPages: Math.ceil(total / limit),
     };
   }
 
   async findOne(id: string): Promise<Empresa | null> {
     const empresa = await this.prisma.extended.empresa.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
     });
-
-    if (!empresa) return null;
-    return new Empresa(empresa);
+    return empresa ? new Empresa(empresa) : null;
   }
 
-  async update(id: string, data: UpdateEmpresaDto): Promise<Empresa> {
-    const empresa = await this.prisma.extended.empresa.update({
+  async update(id: string, data: UpdateEmpresaData): Promise<Empresa> {
+    const updateData: any = {};
+    if (data.nome !== undefined) {
+      updateData.nome = data.nome;
+    }
+    if (data.descricao !== undefined) {
+      updateData.descricao = data.descricao;
+    }
+    if (data.ativo !== undefined) {
+      updateData.ativo = data.ativo;
+    }
+    const empresa = await this.prisma.empresa.update({
       where: { id },
-      data: {
-        ...data,
-        updatedAt: new Date(),
-      },
+      data: updateData,
     });
     return new Empresa(empresa);
   }
@@ -75,38 +88,24 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     usuarioId: number,
     perfilIds: number[],
   ): Promise<void> {
-    // Check if user is already in company
-    const existingLink = await this.prisma.extended.usuarioEmpresa.findUnique({
-      where: {
-        usuarioId_empresaId: {
-          usuarioId,
-          empresaId,
-        },
-      },
-    });
-
-    if (existingLink) {
-      // Update profiles
-      await this.prisma.extended.usuarioEmpresa.update({
-        where: { id: existingLink.id },
-        data: {
-          perfis: {
-            set: perfilIds.map((id) => ({ id })),
-          },
-        },
+    // Usamos uma transação para garantir consistência
+    await this.prisma.$transaction(async (tx) => {
+      // Remove vínculos anteriores se existirem (ou atualiza)
+      await tx.usuarioEmpresa.deleteMany({
+        where: { empresaId, usuarioId },
       });
-    } else {
-      // Create new link
-      await this.prisma.extended.usuarioEmpresa.create({
+
+      // Cria o novo vínculo
+      await tx.usuarioEmpresa.create({
         data: {
-          usuarioId,
           empresaId,
+          usuarioId,
           perfis: {
             connect: perfilIds.map((id) => ({ id })),
           },
         },
       });
-    }
+    });
   }
 
   async findUsersByCompany(
@@ -116,8 +115,9 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
 
-    const [items, total] = await Promise.all([
-      this.prisma.extended.usuarioEmpresa.findMany({
+    const [total, items] = await Promise.all([
+      this.prisma.usuarioEmpresa.count({ where: { empresaId } }),
+      this.prisma.usuarioEmpresa.findMany({
         where: { empresaId },
         include: {
           usuario: {
@@ -132,20 +132,14 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
         skip,
         take: limit,
       }),
-      this.prisma.extended.usuarioEmpresa.count({ where: { empresaId } }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
-
     return {
-      data: items.map((item: any) => ({
-        ...item.usuario,
-        perfis: item.perfis,
-      })),
+      data: items,
       total,
       page,
       limit,
-      totalPages,
+      totalPages: Math.ceil(total / limit),
     };
   }
 
@@ -156,8 +150,9 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
 
-    const [items, total] = await Promise.all([
-      this.prisma.extended.usuarioEmpresa.findMany({
+    const [total, items] = await Promise.all([
+      this.prisma.usuarioEmpresa.count({ where: { usuarioId } }),
+      this.prisma.usuarioEmpresa.findMany({
         where: { usuarioId },
         include: {
           empresa: true,
@@ -166,20 +161,14 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
         skip,
         take: limit,
       }),
-      this.prisma.extended.usuarioEmpresa.count({ where: { usuarioId } }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
-
     return {
-      data: items.map((item: any) => ({
-        ...item.empresa,
-        perfis: item.perfis,
-      })),
+      data: items,
       total,
       page,
       limit,
-      totalPages,
+      totalPages: Math.ceil(total / limit),
     };
   }
 }
