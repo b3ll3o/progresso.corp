@@ -47,10 +47,15 @@
 
 Para entender mais profundamente o projeto, consulte nossos guias detalhados na pasta `docs/`:
 
+- **[Guia de Desenvolvimento](./docs/DEVELOPMENT_GUIDE.md)**: **Obrigatório para todos os contribuidores.** Padrões, workflow e política de documentação.
+- **[Documentação da API](./docs/api/README.md)**: Detalhes técnicos da implementação do backend.
+- **[Documentação do Frontend](./docs/frontend/README.md)**: Detalhes técnicos da implementação do frontend.
 - **[Guia de Arquitetura](./docs/ARCHITECTURE.md)**: Visão geral técnica, segurança, multi-tenancy e fluxo de dados.
+- **[Infraestrutura e Serviços](./docs/INFRASTRUCTURE.md)**: Detalhes sobre Podman, Redis e Observabilidade.
 - **[Guia de Integração API](./docs/API_GUIDE.md)**: Autenticação, paginação, erros e Swagger.
 - **[Relatório de Melhorias](./docs/MELHORIAS.md)**: Resumo das atualizações tecnológicas e arquiteturais aplicadas.
 - **[Agentes de IA](./docs/AGENTS.md)**: Documentação sobre a integração e uso de agentes de inteligência artificial.
+- **[Bibliotecas Compartilhadas](./docs/libs/)**: Documentação dos pacotes de modelos e utilitários.
 
 ---
 

@@ -16,12 +16,12 @@ Backend de alta performance desenvolvido com **NestJS 11** e **Fastify**, parte 
 
 A API é organizada em módulos funcionais:
 
-- **[Auth](./src/auth/README.md)**: Autenticação JWT e proteção de rotas.
-- **[Usuários](./src/usuarios/README.md)**: Gestão de perfis de usuários e dados pessoais.
-- **[Empresas](./src/empresas/README.md)**: Gerenciamento de entidades empresariais e multi-tenancy.
-- **[Perfis](./src/perfis/README.md)**: Grupos de permissões vinculados a empresas.
-- **[Permissões](./src/permissoes/README.md)**: Ações atômicas do sistema.
-- **[Shared](./src/shared/README.md)**: Componentes comuns (Audit, Interceptors, Filters).
+- **[Auth](./modules/auth.md)**: Autenticação JWT e proteção de rotas.
+- **[Usuários](./modules/usuarios.md)**: Gestão de perfis de usuários e dados pessoais.
+- **[Empresas](./modules/empresas.md)**: Gerenciamento de entidades empresariais e multi-tenancy.
+- **[Perfis](./modules/perfis.md)**: Grupos de permissões vinculados a empresas.
+- **[Permissões](./modules/permissoes.md)**: Ações atômicas do sistema.
+- **[Shared](./modules/shared.md)**: Componentes comuns (Audit, Interceptors, Filters).
 
 ## 🛠 Configuração
 

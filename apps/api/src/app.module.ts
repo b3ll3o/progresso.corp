@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { BullModule } from '@nestjs/bullmq';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -66,6 +67,7 @@ import { AppConfig } from './shared/infrastructure/config/app.config';
         },
       }),
     }),
+    EventEmitterModule.forRoot(),
     UsuariosModule,
     PrismaModule,
     AuthModule,

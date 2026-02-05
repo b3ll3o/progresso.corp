@@ -10,6 +10,9 @@ import { QUEUES } from './domain/constants/queues.constants';
 import { AuditProducerService } from './infrastructure/queues/audit.producer.service';
 import { AuditConsumer } from './infrastructure/queues/audit.consumer';
 import { AuditInterceptor } from './infrastructure/interceptors/audit.interceptor';
+import { DomainEventPublisher } from './infrastructure/services/domain-event-publisher.service';
+import { ResilientQueueService } from './infrastructure/services/resilient-queue.service';
+import { DomainEventAuditHandler } from './infrastructure/handlers/domain-event-audit.handler';
 
 @Module({
   imports: [
@@ -33,12 +36,17 @@ import { AuditInterceptor } from './infrastructure/interceptors/audit.intercepto
     AppConfig,
     AuditProducerService,
     AuditConsumer,
+    DomainEventPublisher,
+    ResilientQueueService,
+    DomainEventAuditHandler,
   ],
   exports: [
     PasswordHasher,
     AppConfig,
     AuthorizationService,
     AuditProducerService,
+    DomainEventPublisher,
+    ResilientQueueService,
   ],
 })
 export class SharedModule {}

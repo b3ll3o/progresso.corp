@@ -29,6 +29,17 @@ O controle de acesso é baseado em funções e permissões (**Role-Based Access 
 - **Permissões**: Ações atômicas no sistema (ex: `CREATE_USER`, `READ_EMPRESAS`).
 - **Escopo**: O sistema suporta múltiplos perfis por usuário, vinculados a diferentes empresas.
 
+## 📚 Documentação e Governança
+
+Mantemos uma documentação viva e rigorosa. Para guias específicos, consulte:
+
+- **[Guia de Desenvolvimento](./DEVELOPMENT_GUIDE.md)**: Padrões de código, workflow e política de documentação.
+- **[Infraestrutura e Serviços](./INFRASTRUCTURE.md)**: Detalhes sobre Podman, Redis, Filas e Observabilidade.
+- **[Módulos da API](./api/README.md)**: Documentação funcional de cada módulo do backend.
+
+### Política de Atualização
+Toda alteração estrutural no código deve ser refletida nestes documentos. A ausência de atualização documental é considerada um débito técnico impeditivo para deploys em produção.
+
 ## 🏢 Multi-tenancy (Multi-empresa)
 
 O sistema foi desenhado para ser multi-empresa desde a base:
