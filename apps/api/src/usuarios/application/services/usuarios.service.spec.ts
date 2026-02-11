@@ -3,10 +3,10 @@ import { UsuariosService } from './usuarios.service';
 import { UsuarioRepository } from '../../domain/repositories/usuario.repository';
 import { CreateUsuarioDto } from '../../dto/create-usuario.dto';
 import { Usuario } from '../../domain/entities/usuario.entity';
-import { ForbiddenException } from '@nestjs/common';
+import { ForbiddenException, ConflictException } from '@nestjs/common';
 import { UpdateUsuarioDto } from '../../dto/update-usuario.dto';
 import { JwtPayload } from '../../../shared/types/auth.types';
-import { PasswordHasher } from 'src/shared/domain/services/password-hasher.service';
+import { PasswordHasher } from '../../../shared/domain/services/password-hasher.service';
 import { IUsuarioAuthorizationService } from './usuario-authorization.service';
 import { EmpresaRepository } from '../../../empresas/domain/repositories/empresa.repository';
 
@@ -156,6 +156,28 @@ describe('UsuariosService', () => {
         service.findAll({ page: 1, limit: 10 }, mockUsuarioLogado),
       ).rejects.toThrow(ForbiddenException);
     });
+
+    it('deve permitir listar se isAdminInEmpresa for verdadeiro', async () => {
+      mockUsuarioRepository.findAll.mockResolvedValue({
+        data: [],
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0,
+      });
+
+      const usuarioLogado = {
+        ...mockAdminUsuarioLogado,
+      };
+
+      const result = await service.findAll(
+        { page: 1, limit: 10 },
+        usuarioLogado,
+        false,
+        'empresa-1',
+      );
+      expect(result).toBeDefined();
+    });
   });
 
   describe('busca por um', () => {
@@ -225,6 +247,91 @@ describe('UsuariosService', () => {
 
       expect(result.deletedAt).not.toBeNull();
       expect(mockUsuarioRepository.remove).toHaveBeenCalledWith(1);
+    });
+
+    it('deve lançar ConflictException ao tentar restaurar usuário não deletado', async () => {
+      const nonDeletedUser = { ...mockUser, deletedAt: null };
+      mockUsuarioRepository.findOne.mockResolvedValue(nonDeletedUser);
+
+      await expect(
+        service.update(1, { ativo: true }, mockAdminUsuarioLogado),
+      ).rejects.toThrow(/não está deletado/);
+    });
+
+    it('deve lançar ForbiddenException se não tiver permissão para restaurar', async () => {
+      const deletedUser = { ...mockUser, deletedAt: new Date() };
+      mockUsuarioRepository.findOne.mockResolvedValue(deletedUser);
+      mockUsuarioAuthorizationService.canRestoreUsuario.mockReturnValue(false);
+
+      await expect(
+        service.update(1, { ativo: true }, mockAdminUsuarioLogado),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('deve restaurar usuário deletado', async () => {
+      const deletedUser = { ...mockUser, deletedAt: new Date() };
+      mockUsuarioRepository.findOne.mockResolvedValue(deletedUser);
+      mockUsuarioRepository.restore.mockResolvedValue({
+        ...mockUser,
+        deletedAt: null,
+      });
+
+      const result = await service.update(
+        1,
+        { ativo: true },
+        mockAdminUsuarioLogado,
+      );
+      expect(mockUsuarioRepository.restore).toHaveBeenCalledWith(1);
+      expect(result.deletedAt).toBeNull();
+    });
+
+    it('deve lançar ConflictException ao tentar deletar usuário já deletado', async () => {
+      const deletedUser = { ...mockUser, deletedAt: new Date() };
+      mockUsuarioRepository.findOne.mockResolvedValue(deletedUser);
+
+      await expect(
+        service.update(1, { ativo: false }, mockAdminUsuarioLogado),
+      ).rejects.toThrow(/já está deletado/);
+    });
+
+    it('deve lançar ForbiddenException ao tentar deletar sem ser admin da empresa', async () => {
+      const nonDeletedUser = { ...mockUser, deletedAt: null };
+      mockUsuarioRepository.findOne.mockResolvedValue(nonDeletedUser);
+
+      const nonAdminUser = { ...mockAdminUsuarioLogado, empresas: [] };
+
+      await expect(
+        service.update(1, { ativo: false }, nonAdminUser, 'empresa-1'),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('deve lançar ConflictException se email já estiver em uso por outro id', async () => {
+      mockUsuarioRepository.findOne.mockResolvedValue(mockUser);
+      mockUsuarioRepository.findByEmail.mockResolvedValue({
+        id: 999, // Outro ID
+        email: 'existent@test.com',
+      });
+
+      await expect(
+        service.update(
+          1,
+          { email: 'existent@test.com' },
+          mockAdminUsuarioLogado,
+        ),
+      ).rejects.toThrow(ConflictException);
+    });
+
+    it('deve fazer hash da senha se fornecida', async () => {
+      mockUsuarioRepository.findOne.mockResolvedValue(mockUser);
+      mockUsuarioRepository.update.mockResolvedValue(mockUser);
+
+      await service.update(
+        1,
+        { senha: 'NewPassword123' },
+        mockAdminUsuarioLogado,
+      );
+
+      expect(mockPasswordHasher.hash).toHaveBeenCalledWith('NewPassword123');
     });
   });
 });

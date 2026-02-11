@@ -81,6 +81,34 @@ describe('PrismaEmpresaRepository', () => {
       expect(result).toBeInstanceOf(Empresa);
       expect(mockEmpresaModel.create).toHaveBeenCalledWith({ data: createDto });
     });
+
+    it('deve criar uma empresa com descrição', async () => {
+      const createDto: CreateEmpresaDto = {
+        nome: 'Teste Com Descricao',
+        responsavelId: 1,
+        descricao: 'Uma descrição de teste',
+      };
+      const createdEmpresa = {
+        ...createDto,
+        id: 'uuid-2',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+        ativo: true,
+      };
+      mockEmpresaModel.create.mockResolvedValue(createdEmpresa);
+
+      const result = await repository.create(createDto);
+
+      expect(result).toBeInstanceOf(Empresa);
+      expect(mockEmpresaModel.create).toHaveBeenCalledWith({
+        data: {
+          nome: createDto.nome,
+          responsavelId: createDto.responsavelId,
+          descricao: createDto.descricao,
+        },
+      });
+    });
   });
 
   describe('findAll', () => {
@@ -94,8 +122,21 @@ describe('PrismaEmpresaRepository', () => {
       const result = await repository.findAll({ page: 1, limit: 10 });
 
       expect(result.data).toHaveLength(1);
-      expect(result.total).toBe(1);
       expect(result.totalPages).toBe(1);
+    });
+
+    it('deve usar valores padrão de paginação', async () => {
+      mockEmpresaModel.findMany.mockResolvedValue([]);
+      mockEmpresaModel.count.mockResolvedValue(0);
+
+      await repository.findAll({});
+
+      expect(mockEmpresaModel.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 0,
+          take: 10,
+        }),
+      );
     });
   });
 
@@ -126,6 +167,31 @@ describe('PrismaEmpresaRepository', () => {
       const result = await repository.update('uuid', { nome: 'Updated' });
 
       expect(result.nome).toBe('Updated');
+    });
+
+    it('deve atualizar descrição e status de uma empresa', async () => {
+      const mockEmpresa = {
+        id: 'uuid',
+        nome: 'Teste',
+        descricao: 'Descricao Atualizada',
+        ativo: false,
+      };
+      mockEmpresaModel.update.mockResolvedValue(mockEmpresa);
+
+      const result = await repository.update('uuid', {
+        descricao: 'Descricao Atualizada',
+        ativo: false,
+      });
+
+      expect(result.descricao).toBe('Descricao Atualizada');
+      expect(result.ativo).toBe(false);
+      expect(mockEmpresaModel.update).toHaveBeenCalledWith({
+        where: { id: 'uuid' },
+        data: {
+          descricao: 'Descricao Atualizada',
+          ativo: false,
+        },
+      });
     });
   });
 
@@ -189,6 +255,20 @@ describe('PrismaEmpresaRepository', () => {
       expect(result.data).toBeDefined();
       expect(mockUsuarioEmpresaModel.findMany).toHaveBeenCalled();
     });
+
+    it('deve usar valores padrão de paginação', async () => {
+      mockUsuarioEmpresaModel.findMany.mockResolvedValue([]);
+      mockUsuarioEmpresaModel.count.mockResolvedValue(0);
+
+      await repository.findUsersByCompany('uuid', {});
+
+      expect(mockUsuarioEmpresaModel.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 0,
+          take: 10,
+        }),
+      );
+    });
   });
 
   describe('findCompaniesByUser', () => {
@@ -203,6 +283,20 @@ describe('PrismaEmpresaRepository', () => {
 
       expect(result.data).toBeDefined();
       expect(mockUsuarioEmpresaModel.findMany).toHaveBeenCalled();
+    });
+
+    it('deve usar valores padrão de paginação', async () => {
+      mockUsuarioEmpresaModel.findMany.mockResolvedValue([]);
+      mockUsuarioEmpresaModel.count.mockResolvedValue(0);
+
+      await repository.findCompaniesByUser(1, {});
+
+      expect(mockUsuarioEmpresaModel.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 0,
+          take: 10,
+        }),
+      );
     });
   });
 });

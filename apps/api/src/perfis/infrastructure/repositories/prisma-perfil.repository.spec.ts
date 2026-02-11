@@ -16,7 +16,19 @@ describe('PrismaPerfilRepository', () => {
     delete: jest.fn(),
   };
 
+  const mockPerfil = {
+    id: 1,
+    nome: 'Admin',
+    codigo: 'ADMIN',
+    descricao: 'Administrador',
+    deletedAt: null,
+    ativo: true,
+    empresaId: 'empresa-1',
+    permissoes: [],
+  };
+
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PrismaPerfilRepository,
@@ -38,17 +50,6 @@ describe('PrismaPerfilRepository', () => {
   it('deve ser definido', () => {
     expect(repository).toBeDefined();
   });
-
-  const mockPerfil = {
-    id: 1,
-    nome: 'Admin',
-    codigo: 'ADMIN',
-    descricao: 'Administrador',
-    deletedAt: null,
-    ativo: true,
-    empresaId: 'empresa-1',
-    permissoes: [],
-  };
 
   describe('create', () => {
     it('deve criar um perfil com permissões', async () => {
@@ -95,6 +96,35 @@ describe('PrismaPerfilRepository', () => {
         }),
       );
     });
+
+    it('deve incluir deletados se solicitado', async () => {
+      mockPerfilModel.findMany.mockResolvedValue([mockPerfil]);
+      mockPerfilModel.count.mockResolvedValue(1);
+
+      await repository.findAll(0, 10, true);
+
+      expect(mockPerfilModel.findMany).toHaveBeenCalled();
+    });
+  });
+
+  describe('findOne', () => {
+    it('deve retornar um perfil se encontrado', async () => {
+      mockPerfilModel.findFirst.mockResolvedValue(mockPerfil);
+      const result = await repository.findOne(1);
+      expect(result?.id).toBe(1);
+    });
+
+    it('deve retornar undefined se não encontrado', async () => {
+      mockPerfilModel.findFirst.mockResolvedValue(null);
+      const result = await repository.findOne(1);
+      expect(result).toBeUndefined();
+    });
+
+    it('deve buscar perfil incluindo deletados', async () => {
+      mockPerfilModel.findFirst.mockResolvedValue(mockPerfil);
+      const result = await repository.findOne(1, true);
+      expect(result).toBeDefined();
+    });
   });
 
   describe('update', () => {
@@ -117,6 +147,24 @@ describe('PrismaPerfilRepository', () => {
       const result = await repository.update(99, {});
       expect(result).toBeUndefined();
     });
+
+    it('deve relançar erro se não for P2025', async () => {
+      const error = new Error('Database Error');
+      mockPerfilModel.findFirst.mockResolvedValue(mockPerfil);
+      mockPerfilModel.update.mockRejectedValue(error);
+
+      await expect(repository.update(1, {})).rejects.toThrow('Database Error');
+    });
+
+    it('deve retornar undefined se update falhar com P2025 (embora verificado antes)', async () => {
+      const error = new Error('Not Found');
+      (error as any).code = 'P2025';
+      mockPerfilModel.findFirst.mockResolvedValue(mockPerfil);
+      mockPerfilModel.update.mockRejectedValue(error);
+
+      const result = await repository.update(1, {});
+      expect(result).toBeUndefined();
+    });
   });
 
   describe('remove', () => {
@@ -136,6 +184,23 @@ describe('PrismaPerfilRepository', () => {
         }),
       );
     });
+
+    it('deve lançar erro customizado se perfil não encontrado (P2025)', async () => {
+      const error = new Error('Not Found');
+      (error as any).code = 'P2025';
+      mockPerfilModel.delete.mockRejectedValue(error);
+
+      await expect(repository.remove(99)).rejects.toThrow(
+        'Perfil com ID 99 não encontrado.',
+      );
+    });
+
+    it('deve relançar outros erros', async () => {
+      const error = new Error('Database Error');
+      mockPerfilModel.delete.mockRejectedValue(error);
+
+      await expect(repository.remove(1)).rejects.toThrow('Database Error');
+    });
   });
 
   describe('restore', () => {
@@ -146,6 +211,35 @@ describe('PrismaPerfilRepository', () => {
 
       expect(result.ativo).toBe(true);
       expect(result.deletedAt).toBeNull();
+    });
+
+    it('deve lançar erro customizado se perfil não encontrado (P2025)', async () => {
+      const error = new Error('Not Found');
+      (error as any).code = 'P2025';
+      mockPerfilModel.update.mockRejectedValue(error);
+
+      await expect(repository.restore(99)).rejects.toThrow(
+        'Perfil com ID 99 não encontrado.',
+      );
+    });
+
+    it('deve relançar outros erros', async () => {
+      const error = new Error('Database Error');
+      mockPerfilModel.update.mockRejectedValue(error);
+
+      await expect(repository.restore(1)).rejects.toThrow('Database Error');
+    });
+  });
+
+  describe('mapping', () => {
+    it('deve mapear perfil sem permissões', async () => {
+      mockPerfilModel.findFirst.mockResolvedValue({
+        ...mockPerfil,
+        permissoes: undefined,
+      });
+
+      const result = await repository.findOne(1);
+      expect(result?.permissoes).toBeUndefined();
     });
   });
 
@@ -164,6 +258,12 @@ describe('PrismaPerfilRepository', () => {
           }),
         }),
       );
+    });
+
+    it('deve buscar por nome incluindo deletados', async () => {
+      mockPerfilModel.findFirst.mockResolvedValue(mockPerfil);
+      const result = await repository.findByNome('Admin', true);
+      expect(result).toBeDefined();
     });
   });
 

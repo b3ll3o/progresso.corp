@@ -120,4 +120,32 @@ describe('PerfisController', () => {
       );
     });
   });
+
+  describe('findByNome', () => {
+    it('deve buscar perfis por nome', async () => {
+      const paginationDto: PaginationDto = { page: 1, limit: 10 };
+      const expectedResult: PaginatedResponseDto<Perfil> = {
+        data: [],
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0,
+      };
+      mockPerfisService.findByNomeContaining.mockResolvedValue(expectedResult);
+
+      const result = await controller.findByNome(
+        'Admin',
+        paginationDto,
+        'empresa-1',
+      );
+
+      expect(result).toBe(expectedResult);
+      expect(service.findByNomeContaining).toHaveBeenCalledWith(
+        'Admin',
+        paginationDto,
+        false,
+        'empresa-1',
+      );
+    });
+  });
 });

@@ -95,6 +95,19 @@ describe('PrismaUsuarioRepositoryWithEvents', () => {
         expect.any(UsuarioUpdatedEvent),
       );
     });
+
+    it('não deve incluir alterações se os valores forem iguais', async () => {
+      mockUsuarioModel.findUnique.mockResolvedValue(mockPrismaUser);
+      mockUsuarioModel.update.mockResolvedValue(mockPrismaUser);
+
+      await repository.update(1, { email: 'test@test.com', ativo: true });
+
+      expect(eventPublisher.publish).toHaveBeenCalledWith(
+        expect.objectContaining({
+          changes: {},
+        }),
+      );
+    });
   });
 
   describe('remove', () => {
@@ -119,6 +132,15 @@ describe('PrismaUsuarioRepositoryWithEvents', () => {
         'Usuário com ID 999 não encontrado.',
       );
     });
+    it('deve lançar erro genérico se ocorrer falha na remoção', async () => {
+      const error = new Error('Database connection failed');
+      mockUsuarioModel.findUnique.mockResolvedValue(mockPrismaUser);
+      mockUsuarioModel.delete.mockRejectedValue(error);
+
+      await expect(repository.remove(1)).rejects.toThrow(
+        'Database connection failed',
+      );
+    });
   });
 
   describe('restore', () => {
@@ -140,6 +162,51 @@ describe('PrismaUsuarioRepositoryWithEvents', () => {
       await expect(repository.restore(999)).rejects.toThrow(
         'Usuário com ID 999 não encontrado.',
       );
+    });
+    it('deve lançar erro genérico se ocorrer falha na restauração', async () => {
+      const error = new Error('Database connection failed');
+      mockUsuarioModel.update.mockRejectedValue(error);
+
+      await expect(repository.restore(1)).rejects.toThrow(
+        'Database connection failed',
+      );
+    });
+  });
+
+  describe('mapToEntity', () => {
+    it('deve retornar null se input for null/undefined', async () => {
+      // acessando método privado via casting para any
+      const result = (repository as any).mapToEntity(null);
+      expect(result).toBeNull();
+    });
+
+    it('deve mapear usuário sem empresas', async () => {
+      mockUsuarioModel.findUnique.mockResolvedValue({
+        ...mockPrismaUser,
+        empresas: undefined,
+      });
+      const result = await repository.findOne(1);
+      expect(result?.empresas).toEqual([]);
+    });
+
+    it('deve mapear usuário com empresas mas sem perfis', async () => {
+      mockUsuarioModel.findUnique.mockResolvedValue({
+        ...mockPrismaUser,
+        empresas: [
+          {
+            id: 1,
+            usuarioId: 1,
+            empresaId: 'uuid',
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            perfis: undefined,
+          },
+        ],
+      });
+      const result = await repository.findOne(1);
+      expect(result).toBeDefined();
+      expect(result!.empresas).toBeDefined();
+      expect(result!.empresas![0].perfis).toEqual([]);
     });
   });
 
