@@ -82,6 +82,12 @@ describe('PrismaUsuarioRepository', () => {
       const result = await repository.findOne(999);
       expect(result).toBeUndefined();
     });
+
+    it('deve retornar um usuário incluindo deletados via bypass', async () => {
+      mockUsuarioModel.findUnique.mockResolvedValue(mockPrismaUser);
+      const result = await repository.findOne(1, true);
+      expect(result?.id).toBe(1);
+    });
   });
 
   describe('busca de todos', () => {
@@ -163,6 +169,12 @@ describe('PrismaUsuarioRepository', () => {
       mockUsuarioModel.update.mockResolvedValue(mockPrismaUser);
       const result = await repository.update(1, { email: 'new@test.com' });
       expect(result.email).toBe(mockPrismaUser.email);
+    });
+
+    it('deve restaurar um usuário', async () => {
+      mockUsuarioModel.update.mockResolvedValue(mockPrismaUser);
+      const result = await repository.restore(1);
+      expect(result).toBeDefined();
     });
 
     it('remove deve lançar erro formatado quando ID não existe (P2025)', async () => {

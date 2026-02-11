@@ -80,3 +80,6 @@ temp
 # Coverage
 coverage
 .agent/
+
+
+.reference

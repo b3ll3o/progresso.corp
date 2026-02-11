@@ -1,5 +1,16 @@
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "@monorepo/shared-models": ["../../libs/shared-models/src/index.ts"],
+      "@monorepo/shared-models/*": ["../../libs/shared-models/src/*"],
+      "@monorepo/shared-utils": ["../../libs/shared-utils/src/index.ts"],
+      "@monorepo/shared-utils/*": ["../../libs/shared-utils/src/*"]
+    },
+    "types": ["node"]
+  },
   "files": [],
   "include": [],
   "references": [
@@ -9,12 +20,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"]
-    }
-  }
+  ]
 }
