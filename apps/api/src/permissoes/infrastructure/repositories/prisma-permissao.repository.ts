@@ -7,7 +7,7 @@ import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class PrismaPermissaoRepository implements PermissaoRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   private toDomain(permissao: any): Permissao {
     const newPermissao = new Permissao();
@@ -90,7 +90,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
       return this.toDomain(softDeletedPermissao);
     } catch (error: any) {
       if (error.code === 'P2025') {
-        throw new Error(`Permissão com ID ${id} não encontrada.`); // Or throw NotFoundException
+        throw new Error(`Permissão com ID ${id} não encontrada.`, { cause: error }); // Or throw NotFoundException
       }
       throw error;
     }
@@ -105,7 +105,7 @@ export class PrismaPermissaoRepository implements PermissaoRepository {
       return this.toDomain(restoredPermissao);
     } catch (error: any) {
       if (error.code === 'P2025') {
-        throw new Error(`Permissão com ID ${id} não encontrada.`); // Or throw NotFoundException
+        throw new Error(`Permissão com ID ${id} não encontrada.`, { cause: error }); // Or throw NotFoundException
       }
       throw error;
     }

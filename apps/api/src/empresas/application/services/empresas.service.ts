@@ -16,25 +16,25 @@ export class EmpresasService {
     private readonly empresaRepository: EmpresaRepository,
     private readonly usuarioRepository: UsuarioRepository,
     private readonly perfilRepository: PerfilRepository,
-  ) {}
+  ) { }
 
   async create(createEmpresaDto: CreateEmpresaDto) {
     // Aqui poderíamos usar a entidade para validar antes de persistir
     const novaEmpresa = new Empresa({
       nome: createEmpresaDto.nome,
-      descricao: createEmpresaDto.descricao,
+      descricao: createEmpresaDto.descricao ?? null,
       responsavelId: createEmpresaDto.responsavelId,
-    });
+    } as any);
 
     try {
       novaEmpresa.validarParaCriacao();
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestException(error.message);
     }
 
     const empresa = await this.empresaRepository.create({
       nome: novaEmpresa.nome,
-      descricao: novaEmpresa.descricao,
+      descricao: novaEmpresa.descricao ?? null,
       responsavelId: novaEmpresa.responsavelId,
     });
 
@@ -56,13 +56,15 @@ export class EmpresasService {
 
   async update(id: string, updateEmpresaDto: UpdateEmpresaDto) {
     await this.findOne(id); // Check existence
-    
-    const empresa = await this.empresaRepository.update(id, {
+
+    const empresaData: any = {
       nome: updateEmpresaDto.nome,
       descricao: updateEmpresaDto.descricao,
-      ativo: updateEmpresaDto.ativo,
-    });
-    
+      ativo: (updateEmpresaDto as any).ativo,
+    };
+
+    const empresa = await this.empresaRepository.update(id, empresaData);
+
     this.logger.log(`Empresa atualizada: ${empresa.nome} (ID: ${id})`);
     return empresa;
   }
@@ -70,10 +72,10 @@ export class EmpresasService {
   async remove(id: string) {
     const empresaData = await this.findOne(id);
     const empresa = new Empresa(empresaData);
-    
+
     // Usando o comportamento da entidade
     empresa.desativar();
-    
+
     await this.empresaRepository.remove(id);
     this.logger.log(`Empresa removida (soft-delete): ID ${id}`);
   }

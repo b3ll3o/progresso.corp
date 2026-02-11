@@ -8,7 +8,7 @@ import { Permissao } from '../../../permissoes/domain/entities/permissao.entity'
 
 @Injectable()
 export class PrismaPerfilRepository implements PerfilRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   private toPermissaoDomain(permissao: any): Permissao {
     const newPermissao = new Permissao();
@@ -135,7 +135,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
       return this.toDomain(softDeletedPerfil);
     } catch (error: any) {
       if (error.code === 'P2025') {
-        throw new Error(`Perfil com ID ${id} não encontrado.`); // Or throw NotFoundException
+        throw new Error(`Perfil com ID ${id} não encontrado.`, { cause: error }); // Or throw NotFoundException
       }
       throw error;
     }
@@ -151,7 +151,7 @@ export class PrismaPerfilRepository implements PerfilRepository {
       return this.toDomain(restoredPerfil);
     } catch (error: any) {
       if (error.code === 'P2025') {
-        throw new Error(`Perfil com ID ${id} não encontrado.`); // Or throw NotFoundException
+        throw new Error(`Perfil com ID ${id} não encontrado.`, { cause: error }); // Or throw NotFoundException
       }
       throw error;
     }

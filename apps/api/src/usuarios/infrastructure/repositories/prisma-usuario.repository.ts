@@ -9,7 +9,7 @@ import { Perfil } from '../../../perfis/domain/entities/perfil.entity';
 
 @Injectable()
 export class PrismaUsuarioRepository implements UsuarioRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(data: Partial<Usuario>): Promise<Usuario> {
     const { email, senha } = data;
@@ -126,7 +126,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
         'code' in error &&
         error.code === 'P2025'
       ) {
-        throw new Error(`Usuário com ID ${id} não encontrado.`);
+        throw new Error(`Usuário com ID ${id} não encontrado.`, { cause: error });
       }
       throw error;
     }
@@ -147,7 +147,7 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
         'code' in error &&
         error.code === 'P2025'
       ) {
-        throw new Error(`Usuário com ID ${id} não encontrado.`);
+        throw new Error(`Usuário com ID ${id} não encontrado.`, { cause: error });
       }
       throw error;
     }
@@ -176,15 +176,15 @@ export class PrismaUsuarioRepository implements UsuarioRepository {
           updatedAt: ue.updatedAt,
           perfis: ue.perfis
             ? ue.perfis.map((p: any) => {
-                const perfil = new Perfil();
-                perfil.id = p.id;
-                perfil.nome = p.nome;
-                perfil.codigo = p.codigo;
-                perfil.descricao = p.descricao;
-                perfil.ativo = p.ativo;
-                perfil.permissoes = p.permissoes;
-                return perfil;
-              })
+              const perfil = new Perfil();
+              perfil.id = p.id;
+              perfil.nome = p.nome;
+              perfil.codigo = p.codigo;
+              perfil.descricao = p.descricao;
+              perfil.ativo = p.ativo;
+              perfil.permissoes = p.permissoes;
+              return perfil;
+            })
             : [],
         });
       });

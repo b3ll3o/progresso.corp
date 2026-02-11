@@ -1,0 +1,248 @@
+(node:10435) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+> nx run api:lint
+
+> eslint .
+
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/app.module.ts[24m[0m
+[0m  [2m44:12[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/application/guards/auth.guard.spec.ts[24m[0m
+[0m  [2m11:20[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/application/guards/auth.guard.ts[24m[0m
+[0m  [2m26:47[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/application/guards/permissao.guard.spec.ts[24m[0m
+[0m  [2m10:20[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/application/guards/permissao.guard.ts[24m[0m
+[0m  [2m40:51[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m49:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m55:62[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m56:50[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/application/services/auth.service.ts[24m[0m
+[0m  [2m55:65[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m56:47[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m58:39[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m63:56[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/auth.module.ts[24m[0m
+[0m  [2m22:69[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/infrastructure/strategies/jwt.strategy.spec.ts[24m[0m
+[0m  [2m14:11[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m15:14[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m16:13[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m29:28[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/auth/infrastructure/strategies/jwt.strategy.ts[24m[0m
+[0m  [2m13:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/empresas/application/services/empresas.service.spec.ts[24m[0m
+[0m  [2m179:64[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m180:63[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m211:64[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m224:71[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/empresas/domain/entities/empresa.entity.spec.ts[24m[0m
+[0m   [2m84:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m87:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m105:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/empresas/domain/events/empresa.events.ts[24m[0m
+[0m  [2m21:45[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/empresas/domain/repositories/empresa.repository.ts[24m[0m
+[0m  [2m24:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m28:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/empresas/infrastructure/repositories/prisma-empresa.repository.ts[24m[0m
+[0m   [2m17:23[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m47:30[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m63:23[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m114:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m149:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/perfis/application/services/perfis.service.ts[24m[0m
+[0m  [2m132:56[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m133:28[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/perfis/domain/entities/perfil.entity.spec.ts[24m[0m
+[0m  [2m94:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m95:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/perfis/infrastructure/repositories/prisma-perfil.repository.ts[24m[0m
+[0m   [2m13:40[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m24:28[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m33:55[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m59:24[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m75:26[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m83:24[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m121:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m136:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m138:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m152:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m154:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m165:24[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m188:24[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m211:26[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/permissoes/application/controllers/permissoes.controller.spec.ts[24m[0m
+[0m  [2m39:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/permissoes/infrastructure/repositories/prisma-permissao.repository.spec.ts[24m[0m
+[0m  [2m133:14[22m  [33mwarning[39m  Forbidden non-null assertion              [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m145:14[22m  [33mwarning[39m  Forbidden non-null assertion              [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m191:23[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m275:14[22m  [33mwarning[39m  Forbidden non-null assertion              [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m287:14[22m  [33mwarning[39m  Forbidden non-null assertion              [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/permissoes/infrastructure/repositories/prisma-permissao.repository.ts[24m[0m
+[0m   [2m12:31[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m42:26[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m77:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m91:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m93:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m106:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m108:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m156:26[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/prisma/prisma-extension.ts[24m[0m
+[0m   [2m5:9[22m   [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m14:11[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m15:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m15:35[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m53:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m67:36[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/prisma/prisma.service.ts[24m[0m
+[0m  [2m17:28[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m18:20[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m25:32[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/filters/all-exceptions.filter.spec.ts[24m[0m
+[0m   [2m8:24[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m47:50[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m63:50[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/filters/all-exceptions.filter.ts[24m[0m
+[0m  [2m73:45[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m89:45[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m95:42[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m97:42[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/interceptors/audit.interceptor.ts[24m[0m
+[0m  [2m23:71[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m58:30[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/interceptors/empresa.interceptor.ts[24m[0m
+[0m  [2m16:71[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/interceptors/logging.interceptor.spec.ts[24m[0m
+[0m  [2m40:50[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/interceptors/logging.interceptor.ts[24m[0m
+[0m  [2m15:71[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/queues/audit.consumer.ts[24m[0m
+[0m  [2m15:26[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m15:31[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m15:54[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m21:23[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/queues/audit.producer.service.ts[24m[0m
+[0m  [2m16:19[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m28:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m33:28[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m45:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/infrastructure/services/resilient-queue.service.ts[24m[0m
+[0m   [2m14:38[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m26:75[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m29:41[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m51:12[22m  [33mwarning[39m  Forbidden non-null assertion              [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m73:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m103:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m114:49[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m123:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m132:64[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m142:67[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m143:60[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/types/express.d.ts[24m[0m
+[0m  [2m3:21[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/shared/types/fastify.d.ts[24m[0m
+[0m  [2m7:22[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/usuarios/domain/entities/usuario-empresa.entity.spec.ts[24m[0m
+[0m   [2m55:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m57:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m140:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m141:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m142:14[22m  [33mwarning[39m  Forbidden non-null assertion  [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/usuarios/domain/events/usuario.events.ts[24m[0m
+[0m  [2m21:45[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/usuarios/infrastructure/repositories/prisma-usuario-with-events.repository.ts[24m[0m
+[0m   [2m33:27[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m79:33[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m79:41[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m92:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m114:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m121:35[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m139:27[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m157:29[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m169:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m176:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m189:29[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m201:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m208:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m214:38[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m228:61[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m236:33[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/usuarios/infrastructure/repositories/prisma-usuario.repository.spec.ts[24m[0m
+[0m  [2m170:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m180:17[22m  [33mwarning[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4m/home/leo/projetos/progresso.corp/apps/api/src/usuarios/infrastructure/repositories/prisma-usuario.repository.ts[24m[0m
+[0m   [2m22:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m62:33[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m62:41[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m75:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m   [2m97:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m111:12[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m121:14[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m122:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m129:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m142:14[22m  [33mwarning[39m  Forbidden non-null assertion                                    [2m@typescript-eslint/no-non-null-assertion[22m[0m
+[0m  [2m143:21[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m150:9[22m   [31merror[39m    There is no `cause` attached to the symptom error being thrown  [2mpreserve-caught-error[22m[0m
+[0m  [2m156:38[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m170:61[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m178:33[22m  [33mwarning[39m  Unexpected any. Specify a different type                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[31m[1m✖ 146 problems (8 errors, 138 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m
+Warning: command "eslint ." exited with non-zero status code
+
+
+ NX   Running target lint for project api failed
+
+Failed tasks:
+
+- api:lint
+
+Hint: run the command with --verbose for more details.
+
+
+ NX   Nx Cloud encountered some problems
+
+This workspace is more than three days old and is not connected. Workspaces must be connected within 3 days of creation. Claim your workspace at https://cloud.nx.app. (code: 401)
+
