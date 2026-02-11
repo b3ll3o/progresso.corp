@@ -85,7 +85,10 @@ describe('EmpresasService', () => {
       const result = await service.create(createDto);
 
       expect(result).toEqual(mockEmpresa);
-      expect(repository.create).toHaveBeenCalledWith(createDto);
+      expect(repository.create).toHaveBeenCalledWith({
+        ...createDto,
+        descricao: null,
+      });
     });
   });
 
