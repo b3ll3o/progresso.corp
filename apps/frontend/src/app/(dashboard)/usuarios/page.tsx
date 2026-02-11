@@ -7,6 +7,8 @@ import { api } from '@/lib/api/server-api';
 import { deleteUsuario } from '@/app/actions/usuarios';
 import { UsuarioForm } from '@/components/forms/usuario-form';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Usuários - ProgressoCorp',
 };
@@ -21,10 +23,10 @@ export default async function UsuariosPage({
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  
+
   let usuarios = [];
   let error = null;
-  
+
   try {
     const response = await api.usuarios.list({ page, limit: 10 });
     usuarios = response.data || [];
@@ -65,7 +67,10 @@ export default async function UsuariosPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {usuarios.length === 0 ? (
                     <tr>
-                      <td colSpan={3} className="px-6 py-8 text-center text-gray-500">
+                      <td
+                        colSpan={3}
+                        className="px-6 py-8 text-center text-gray-500"
+                      >
                         Nenhum usuário encontrado
                       </td>
                     </tr>
@@ -73,7 +78,9 @@ export default async function UsuariosPage({
                     usuarios.map((usuario: any) => (
                       <tr key={usuario.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{usuario.email}</div>
+                          <div className="text-sm text-gray-900">
+                            {usuario.email}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -87,15 +94,22 @@ export default async function UsuariosPage({
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <form action={async () => {
-                            'use server';
-                            await deleteUsuario(String(usuario.id));
-                          }} className="inline">
+                          <form
+                            action={async () => {
+                              'use server';
+                              await deleteUsuario(String(usuario.id));
+                            }}
+                            className="inline"
+                          >
                             <button
                               type="submit"
                               className="text-red-600 hover:text-red-900"
                               onClick={(e) => {
-                                if (!confirm('Tem certeza que deseja excluir este usuário?')) {
+                                if (
+                                  !confirm(
+                                    'Tem certeza que deseja excluir este usuário?',
+                                  )
+                                ) {
                                   e.preventDefault();
                                 }
                               }}

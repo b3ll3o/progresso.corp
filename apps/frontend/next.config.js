@@ -11,6 +11,12 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    ppr: false,
+  },
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
   async rewrites() {
     return [
       {
@@ -21,6 +27,15 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push({
+        '_global-error': 'commonjs _global-error',
+      });
+    }
+    return config;
   },
 };
 

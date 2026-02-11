@@ -7,6 +7,8 @@ import { api } from '@/lib/api/server-api';
 import { deleteEmpresa } from '@/app/actions/empresas';
 import { EmpresaForm } from '@/components/forms/empresa-form';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Empresas - ProgressoCorp',
 };
@@ -21,11 +23,11 @@ export default async function EmpresasPage({
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  
+
   let empresas = [];
   let usuarios = [];
   let error = null;
-  
+
   try {
     const [empresasResponse, usuariosResponse] = await Promise.all([
       api.empresas.list({ page, limit: 10 }),
@@ -73,7 +75,10 @@ export default async function EmpresasPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {empresas.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                      <td
+                        colSpan={4}
+                        className="px-6 py-8 text-center text-gray-500"
+                      >
                         Nenhuma empresa encontrada
                       </td>
                     </tr>
@@ -81,10 +86,14 @@ export default async function EmpresasPage({
                     empresas.map((empresa: any) => (
                       <tr key={empresa.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{empresa.nome}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {empresa.nome}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">{empresa.descricao || '-'}</div>
+                          <div className="text-sm text-gray-500">
+                            {empresa.descricao || '-'}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -98,15 +107,22 @@ export default async function EmpresasPage({
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <form action={async () => {
-                            'use server';
-                            await deleteEmpresa(String(empresa.id));
-                          }} className="inline">
+                          <form
+                            action={async () => {
+                              'use server';
+                              await deleteEmpresa(String(empresa.id));
+                            }}
+                            className="inline"
+                          >
                             <button
                               type="submit"
                               className="text-red-600 hover:text-red-900"
                               onClick={(e) => {
-                                if (!confirm('Tem certeza que deseja excluir esta empresa?')) {
+                                if (
+                                  !confirm(
+                                    'Tem certeza que deseja excluir esta empresa?',
+                                  )
+                                ) {
                                   e.preventDefault();
                                 }
                               }}

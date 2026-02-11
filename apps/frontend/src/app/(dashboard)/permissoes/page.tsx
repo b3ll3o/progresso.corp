@@ -7,6 +7,8 @@ import { api } from '@/lib/api/server-api';
 import { deletePermissao } from '@/app/actions/permissoes';
 import { PermissaoForm } from '@/components/forms/permissao-form';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Permissões - ProgressoCorp',
 };
@@ -21,10 +23,10 @@ export default async function PermissoesPage({
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  
+
   let permissoes = [];
   let error = null;
-  
+
   try {
     const response = await api.permissoes.list({ page, limit: 10 });
     permissoes = response.data || [];
@@ -68,7 +70,10 @@ export default async function PermissoesPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {permissoes.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                      <td
+                        colSpan={4}
+                        className="px-6 py-8 text-center text-gray-500"
+                      >
                         Nenhuma permissão encontrada
                       </td>
                     </tr>
@@ -76,7 +81,9 @@ export default async function PermissoesPage({
                     permissoes.map((permissao: any) => (
                       <tr key={permissao.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{permissao.nome}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {permissao.nome}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
@@ -84,18 +91,27 @@ export default async function PermissoesPage({
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">{permissao.descricao}</div>
+                          <div className="text-sm text-gray-500">
+                            {permissao.descricao}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <form action={async () => {
-                            'use server';
-                            await deletePermissao(String(permissao.id));
-                          }} className="inline">
+                          <form
+                            action={async () => {
+                              'use server';
+                              await deletePermissao(String(permissao.id));
+                            }}
+                            className="inline"
+                          >
                             <button
                               type="submit"
                               className="text-red-600 hover:text-red-900"
                               onClick={(e) => {
-                                if (!confirm('Tem certeza que deseja excluir esta permissão?')) {
+                                if (
+                                  !confirm(
+                                    'Tem certeza que deseja excluir esta permissão?',
+                                  )
+                                ) {
                                   e.preventDefault();
                                 }
                               }}
